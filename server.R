@@ -7,9 +7,6 @@ function(input,output,session){
                   fontWeight ='bold')
   })
 
-  #reading in data 
-  airbnb<-read.csv('listings.csv')
-  
   mapdata <- reactive({
     airbnb %>% 
       mutate(n=1) %>% 
@@ -61,6 +58,8 @@ function(input,output,session){
       filter(room_type=="Private room",neighbourhood_group=="Brooklyn") %>% 
       group_by(neighbourhood,neighbourhood_group) %>% 
       summarise(
+        long=mean(longitude),
+        lat=mean(latitude),
         avg_price=round(mean(price),0),
         avg_reviews=round(mean(number_of_reviews),0),
         num_listings=sum(n)) %>%     
@@ -72,27 +71,43 @@ function(input,output,session){
       arrange(desc(num_listings))
   })
   
-  output$lePlot <- renderPlot({
-    bar_data()[1:5,] %>% 
-      ggplot(aes(x=reorder(neighbourhood,desc(num_listings)),y=num_listings)) + 
-      geom_bar(stat='identity', fill = "light blue") + 
-      theme_bw() +
-      ylab("Average Number of Reviews") +
-      xlab("") +
-      ggtitle("Top 5 Listed Neighborhoods") +
-      theme(plot.title = element_text(hjust = 0.5)) +coord_flip()
-  })
+   output$lePlot <- renderPlot({
+     bar_data()[1:5,] %>% 
+        ggplot(aes(x=reorder(neighbourhood,desc(num_listings)),y=num_listings)) + 
+        geom_bar(stat='identity', fill = "light blue") + 
+        theme_bw() +
+        ylab("Average Number of Reviews") +
+        xlab("") +
+        ggtitle("Top 5 Listed Neighborhoods") +
+        theme(plot.title = element_text(hjust = 0.5)) +
+        coord_flip()
+   })
   
-  output$leBubblePlot <- renderPlotly({
-    ggplotly(ggplot(bar_data()[1:5,],
-               aes(x=avg_price, y=num_listings, size = avg_reviews, color = neighbourhood,text=text)) +
-               geom_point(alpha=0.7) +
-               scale_size(range = c(5, 15)) +
-               scale_color_viridis(discrete=TRUE, guide=FALSE) +
-               theme_bw() +
-               xlab("Average Price") + 
-               ylab("Number of Reviews") +
-               theme(legend.position="bottomright"),tooltip="text") 
-  })
+    output$leBubblePlot <- renderPlotly({
+      ggplotly(ggplot(bar_data()[1:5,],
+                 aes(x=avg_price, y=num_listings, size = avg_reviews, color = neighbourhood,text=text)) +
+                 geom_point(alpha=0.7) +
+                 scale_size(range = c(5, 15)) +
+                 scale_color_viridis(discrete=TRUE, guide=FALSE) +
+                 theme_bw() +
+                 xlab("Average Price") + 
+                 ylab("Number of Listings") +
+                 ggtitle("Most Popular Neighborhoods") +
+                 theme(legend.position="none",plot.title = element_text(hjust = 0.5)),tooltip="text") 
+    })
+   
+   #MAP 2 select locations  
+    output$map2 <- renderLeaflet({
+      #maxprice<-7
+      bar_data()[1:5,] %>% 
+        leaflet() %>% 
+        addProviderTiles("CartoDB.Positron") %>% 
+        addMarkers(~long, ~lat, label = ~neighbourhood) 
+      
+    })
+  
 
 }
+
+
+

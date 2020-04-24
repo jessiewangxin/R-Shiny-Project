@@ -1,10 +1,4 @@
-library(shiny)
-library(shinydashboard)
-library(DT)
-library(leaflet)
-library(dplyr)
-library(plotly)
-library(viridis)
+
 
 dashboardPage(skin='black',
   dashboardHeader(title='Airbnb Listings in NYC'),
@@ -28,6 +22,8 @@ dashboardPage(skin='black',
                   #leaflet map
                   leafletOutput("map1"),
                   #slider
+                  fluidRow(
+                  column(6,
                   sliderInput("map_pricerange",
                               "Price Range:",
                               min = 32,
@@ -38,16 +34,20 @@ dashboardPage(skin='black',
                                  choices = unique (airbnb$room_type)),
                   selectizeInput(inputId ="borough",
                                  label = "Borough",
-                                 choices = unique (airbnb$neighbourhood_group))
+                                 choices = unique (airbnb$neighbourhood_group))),
+                  column(6,
+                         "INSTRUCTION TEXT HERE")
                   
-                  ),
+                  )),
           
           #Other Analytics
           tabItem(tabName='analytics',
                   
                   #plots
-                  plotOutput("lePlot"),
-                  plotlyOutput("leBubblePlot")),
+                  fluidRow(
+                  column(6,plotOutput("lePlot")),
+                  column(6,plotlyOutput("leBubblePlot"))),
+                  leafletOutput("map2")),
           
             #DATA TAB
           tabItem(tabName='data',
