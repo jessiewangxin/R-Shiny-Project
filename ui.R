@@ -4,7 +4,7 @@ dashboardPage(skin='black',
   dashboardHeader(title='Airbnb Listings in NYC'),
   dashboardSidebar(
     sidebarUserPanel("Jessie Wang",
-                     image="https://vignette.wikia.nocookie.net/onepiece/images/a/af/Tony_Tony_Chopper_Anime_Post_Timeskip_Infobox.png/revision/latest?cb=20130428202154"),
+                     image="https://avatars3.githubusercontent.com/u/60956368?s=400&v=4"),
     sidebarMenu(
       menuItem('Introduction',tabName= 'introduction',icon=icon('info')),
       menuItem('Map',tabName = 'map',icon=icon('map')),
@@ -14,9 +14,12 @@ dashboardPage(skin='black',
   dashboardBody(
     tabItems(
           tabItem(tabName='introduction',
-            HTML('<img src="https://eatplantstraveloften.files.wordpress.com/2019/10/p1011002-1.jpg?w=665", height="400px"    
-            style="float:right"/>','<p style="color:black"></p>'),
-                  'REPLACE WITH TEXT'),
+            HTML('
+            <p>REPLACE WITH TEXT</p>
+            <p>
+            <img src="https://eatplantstraveloften.files.wordpress.com/2019/10/p1011002-1.jpg?w=665", height="400px"    
+            style="float:right"/>','<p style="color:black"></p></p>
+            <p>REPLACE WITH TEXT</p>')),
           #INTERACTIVE MAP TAB
           tabItem(tabName='map',
                   #leaflet map
@@ -57,10 +60,17 @@ dashboardPage(skin='black',
           tabItem(tabName='about', 
                   
             fluidRow(
-              column(6,"Hello, I hope you enjoyed browsing my R Shiny App project.
-              Linkedin link
-              Github link
-                     "),
+              column(6,HTML('<p>Hello,</p>
+                              <p>I hope you enjoyed browsing my R Shiny App project. </p>
+                              <p>A little about myself, I studied Actuarial Science at the University of California, Santa Barbara. 
+                              Upon graduation, I worked as an Actuary in the healthcare industry for several years, 
+                              with an array of experience in: data analytics, financial reporting, reserving and pricing. </p>
+                              <p>I became interested in Data Science, as I have always had a passion for Statistics and technology. I also
+                              like the opportunity to combine my analytical skills with my creative talent. Aside from Data Science,
+                              my interests include traveling, photography, and cooking - I am always trying new recipes.</p>
+                              <p><a href="https://www.linkedin.com/in/jessie-wang-5b82b980/">LinkedIn</a></p>
+                              <p><a href="https://github.com/jessiewangxin/">Github</a></p>
+                              <p><br></p>')),
               column(6,
               #PERSONAL IMAGE LINK
               HTML('<img src="https://eatplantstraveloften.files.wordpress.com/2019/11/p6272436-1.jpg?w=665", height="400px"    

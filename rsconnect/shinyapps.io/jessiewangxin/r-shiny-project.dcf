@@ -5,6 +5,8 @@ account: jessiewangxin
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2178873
-bundleId: 3059766
+bundleId: 3060638
 url: https://jessiewangxin.shinyapps.io/r-shiny-project/
-when: 1587736746.93467
+when: 1587748431.71317
+asMultiple: FALSE
+asStatic: FALSE

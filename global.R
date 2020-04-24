@@ -1,5 +1,5 @@
 #reading in data 
-airbnb<-read.csv('listings.csv')
+airbnb<-read.csv('./Data/listings.csv')
 
 #loading libraries
 library(shiny)
