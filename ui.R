@@ -3,6 +3,8 @@ library(shinydashboard)
 library(DT)
 library(leaflet)
 library(dplyr)
+library(plotly)
+library(viridis)
 
 dashboardPage(skin='black',
   dashboardHeader(title='Airbnb Listings in NYC'),
@@ -26,15 +28,26 @@ dashboardPage(skin='black',
                   #leaflet map
                   leafletOutput("map1"),
                   #slider
-                  sliderInput("maxprice",
+                  sliderInput("map_pricerange",
                               "Price Range:",
                               min = 32,
                               max = 500,
-                              value = 100)
-                    ),
+                              value = c(75,300)),
+                  selectizeInput(inputId ="roomtype",
+                                 label = "Room Type",
+                                 choices = unique (airbnb$room_type)),
+                  selectizeInput(inputId ="borough",
+                                 label = "Borough",
+                                 choices = unique (airbnb$neighbourhood_group))
+                  
+                  ),
           
           #Other Analytics
-          tabItem(tabName='analytics','analytics'),
+          tabItem(tabName='analytics',
+                  
+                  #plots
+                  plotOutput("lePlot"),
+                  plotlyOutput("leBubblePlot")),
           
             #DATA TAB
           tabItem(tabName='data',
@@ -45,14 +58,8 @@ dashboardPage(skin='black',
                   
             fluidRow(
               column(6,"Hello, I hope you enjoyed browsing my R Shiny App project.
-              
-              A little about myself:
-              Fell into the profession as I have a talent for mathematics.
-              After several years, I realized Data Science is more of a fit for my creativity. 
-              \n
-              Linkedin 
-              \n
-              Github
+              Linkedin link
+              Github link
                      "),
               column(6,
               #PERSONAL IMAGE LINK
