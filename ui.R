@@ -4,7 +4,7 @@ dashboardPage(skin='black',
   dashboardHeader(title='Airbnb Listings in NYC'),
   dashboardSidebar(
     sidebarUserPanel("Jessie Wang",
-                     image="https://avatars3.githubusercontent.com/u/60956368?s=400&v=4"),
+                     image="Jessie1.jpeg"),
     sidebarMenu(
       menuItem('Introduction',tabName= 'introduction',icon=icon('info')),
       menuItem('Map',tabName = 'map',icon=icon('map')),
@@ -15,11 +15,19 @@ dashboardPage(skin='black',
     tabItems(
           tabItem(tabName='introduction',
             HTML('
-            <p>REPLACE WITH TEXT</p>
-            <p>
-            <img src="https://eatplantstraveloften.files.wordpress.com/2019/10/p1011002-1.jpg?w=665", height="400px"    
-            style="float:right"/>','<p style="color:black"></p></p>
-            <p>REPLACE WITH TEXT</p>')),
+            <p><center><b>REPLACE WITH TEXT</b></center></p>
+            <p><center>
+            <img src="NewYork2.png", height="400px"    
+            style="float:center"/>
+            <img src="NewYork3.png", height="400px"    
+            style="float:center"/></center>
+            </p>
+            </p><center>
+            (photos taken by Jessie Wang)
+            </center></p>
+            <p><center>
+            REPLACE WITH TEXT
+            </center></p>')),
           #INTERACTIVE MAP TAB
           tabItem(tabName='map',
                   #leaflet map
@@ -27,6 +35,7 @@ dashboardPage(skin='black',
                   #slider
                   fluidRow(
                   column(6,
+                  HTML('<br></br>'),
                   sliderInput("map_pricerange",
                               "Price Range:",
                               min = 32,
@@ -37,9 +46,21 @@ dashboardPage(skin='black',
                                  choices = unique (airbnb$room_type)),
                   selectizeInput(inputId ="borough",
                                  label = "Borough",
-                                 choices = unique (airbnb$neighbourhood_group))),
-                  column(6,
-                         "INSTRUCTION TEXT HERE")
+                                 choices = unique (airbnb$neighbourhood_group)),
+                  #<br> adds space below the drop down menus
+                  HTML('
+                         <br></br>
+                         <br></br> 
+                         <br></br>
+                       ')),
+                  column(6,HTML(
+                         '<br></br>
+                         <b>Instructions: </b>
+                         <br></br>
+                         INSERT TEXT HERE
+                         <br></br>
+                         <br></br>
+                         '))
                   
                   )),
           
@@ -48,9 +69,15 @@ dashboardPage(skin='black',
                   
                   #plots
                   fluidRow(
-                  column(6,plotOutput("lePlot")),
-                  column(6,plotlyOutput("leBubblePlot"))),
-                  leafletOutput("map2")),
+                    column(4,"TEXT HERE"),
+                  # column(6,plotOutput("lePlot")),
+                  column(8,plotlyOutput("leBubblePlot"))),
+                  HTML('<br></br>'),
+                  leafletOutput("map2"),
+                  HTML('
+                         <br></br>
+                         <br></br> 
+                       ')),
           
             #DATA TAB
           tabItem(tabName='data',
@@ -66,14 +93,14 @@ dashboardPage(skin='black',
                               Upon graduation, I worked as an Actuary in the healthcare industry for several years, 
                               with an array of experience in: data analytics, financial reporting, reserving and pricing. </p>
                               <p>I became interested in Data Science, as I have always had a passion for Statistics and technology. I also
-                              like the opportunity to combine my analytical skills with my creative talent. Aside from Data Science,
+                              like the opportunity to combine my analytical skills with my creative instinct. Aside from Data Science,
                               my interests include traveling, photography, and cooking - I am always trying new recipes.</p>
                               <p><a href="https://www.linkedin.com/in/jessie-wang-5b82b980/">LinkedIn</a></p>
                               <p><a href="https://github.com/jessiewangxin/">Github</a></p>
                               <p><br></p>')),
               column(6,
               #PERSONAL IMAGE LINK
-              HTML('<img src="https://eatplantstraveloften.files.wordpress.com/2019/11/p6272436-1.jpg?w=665", height="400px"    
+              HTML('<img src="Jessie2.jpg", height="400px"    
               style="float:right"/>','<p style="color:black"></p>'))))
     )
   )

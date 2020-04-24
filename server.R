@@ -71,17 +71,17 @@ function(input,output,session){
       arrange(desc(num_listings))
   })
   
-   output$lePlot <- renderPlot({
-     bar_data()[1:5,] %>% 
-        ggplot(aes(x=reorder(neighbourhood,desc(num_listings)),y=num_listings)) + 
-        geom_bar(stat='identity', fill = "light blue") + 
-        theme_bw() +
-        ylab("Average Number of Reviews") +
-        xlab("") +
-        ggtitle("Top 5 Listed Neighborhoods") +
-        theme(plot.title = element_text(hjust = 0.5)) +
-        coord_flip()
-   })
+   # output$lePlot <- renderPlot({
+   #   bar_data()[1:5,] %>% 
+   #      ggplot(aes(x=reorder(neighbourhood,desc(num_listings)),y=num_listings)) + 
+   #      geom_bar(stat='identity', fill = "light blue") + 
+   #      theme_bw() +
+   #      ylab("Average Number of Reviews") +
+   #      xlab("") +
+   #      ggtitle("Top 5 Listed Neighborhoods") +
+   #      theme(plot.title = element_text(hjust = 0.5)) +
+   #      coord_flip()
+   # })
   
     output$leBubblePlot <- renderPlotly({
       ggplotly(ggplot(bar_data()[1:5,],
@@ -92,8 +92,8 @@ function(input,output,session){
                  theme_bw() +
                  xlab("Average Price") + 
                  ylab("Number of Listings") +
-                 ggtitle("Most Popular Neighborhoods") +
-                 theme(legend.position="none",plot.title = element_text(hjust = 0.5)),tooltip="text") 
+                 ggtitle("TOP 5") +
+                 theme(legend.position="topright",plot.title = element_text(hjust = 0.5)),tooltip="text") 
     })
    
    #MAP 2 select locations  
