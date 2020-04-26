@@ -142,7 +142,14 @@ dashboardPage(skin='black',
                          <br></br>
                          <br></br> 
                        ')),
-          tabItem(tabName = 'summaries'),
+          tabItem(tabName = 'summaries',
+                  selectizeInput(inputId ="neighborhood",
+                                 label = "Neighborhood",
+                                 choices = unique (airbnb$neighbourhood)),
+                  plotOutput("summaryplot1"),
+                  plotOutput("summaryplot2"),
+                  plotOutput("summaryplot3")
+                  ),
             #DATA TAB
           tabItem(tabName='data',
                   HTML('

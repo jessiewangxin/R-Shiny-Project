@@ -23,7 +23,7 @@ function(input,output,session){
                         neighbourhood," (",neighbourhood_group,")", sep=""))
   })
     
-  test=mapdata 
+
   #adding colors for the map (map tab)
   boroughcolors <- colorNumeric(palette = "BuPu",domain = 0:500)
   #boroughcolors <- colorNumeric(palette = "Set1",domain = mapdata$price_bucket)
@@ -45,7 +45,7 @@ function(input,output,session){
     
   })
   
-  #WHERE TO STAY GRAPHS! 
+  #DATA FOR WHERE TO STAY GRAPHS
   bar_data <- reactive({
     airbnb %>% 
       mutate(n=1) %>% 
@@ -65,7 +65,7 @@ function(input,output,session){
       arrange(desc(num_listings))
   })
   
-  
+  #Bubble plot, where to stay tab
     output$leBubblePlot <- renderPlotly({
       ggplotly(ggplot(bar_data()[1:input$numoptions,] %>% 
                  filter(avg_price<=input$pricerange2[2] & avg_price>=input$pricerange2[1]),
@@ -81,7 +81,7 @@ function(input,output,session){
                  layout(autosize = FALSE, height = 425,width=650)
     })
    
-   #MAP 2 select locations  
+   #MAP 2 only displays select locations  
     output$map2 <- renderLeaflet({
       #maxprice<-7
       bar_data()[1:input$numoptions,] %>% 
@@ -91,7 +91,63 @@ function(input,output,session){
         addMarkers(~long, ~lat, label = ~neighbourhood) 
       
     })
+
+    #data used to create plots on the summary tab 
+    summarydata <- reactive({
+      airbnb %>% 
+        filter(neighbourhood==input$neighborhood) 
+    })
+    
+    #1st plot on summary tab
+    output$summaryplot1 <- renderPlot({
+      ggplot(
+        summarydata() %>% mutate(n=1) %>% 
+          group_by(room_type) %>% 
+          summarise(count=sum(n)) %>% mutate(percent=round(count/sum(count)*100,0.0))
+        , aes(x=reorder(room_type,desc(count)),y=count)) + 
+        geom_bar(stat="identity", fill = 'light blue') +  
+        geom_text(aes(label=paste0(percent, "%\n(", count, ")"))) +
+        theme_bw() +
+        ylab("") +
+        xlab("") +
+        ggtitle("Frequency of Property Type")
+    })
   
+
+    #2nd plot, pie chart, on summary tab
+    output$summaryplot2 <- renderPlot({
+      ggplot(
+        summarydata() %>% mutate(n=1,
+                          minimum_stay = ifelse(minimum_nights==1, '1 day',
+                                                ifelse(minimum_nights >=2 &minimum_nights <=7, '2 to 7 days',
+                                                       ifelse(minimum_nights >=8 &minimum_nights <=30, '8 to 30 days', 'over 30 days')))) %>% 
+                                                       group_by(minimum_stay) %>% summarise(count=sum(n))
+             , aes(x = 2, y = count, fill = minimum_stay)) +
+        geom_bar(stat = "identity", color = "white") +
+        coord_polar(theta = "y", start = 0) +
+        theme_void() +
+        xlim(0.5, 2.5) + 
+        xlab('') +
+        ylab('') +
+        ggtitle('Minimum Days Required to Stay') +
+        scale_fill_discrete(name = 'Minimum Stay') +
+        theme_bw()
+    })
+    
+    #3rd plot, histogram, on summary tab
+    output$summaryplot3 <- renderPlot({
+      ggplot(summarydata() %>% filter(availability_365!=0), aes(x=availability_365, fill='coral')) + 
+        geom_histogram(binwidth = 20) +
+        geom_density(alpha=.2) +
+        theme_bw() +
+        theme(legend.position = "none") +
+        ggtitle("Distribution of Availability") +
+        ylab("") +
+        xlab("Days in the Year")
+
+    })
+    
+    
 
 }
 
