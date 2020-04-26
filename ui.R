@@ -173,7 +173,7 @@ dashboardPage(skin='black',
                               Upon graduation, I started my career as an Actuary in the healthcare industry, where I had the opportunity 
                               to work on various projects utilizing healthcare data. 
                               </p>
-                              <p>I became interested in data science as there are many ways to use of data creatively as a form 
+                              <p>I became interested in data science as there are many ways to use data creatively as a form 
                               storytelling. Aside from data science,
                               my interests include traveling, photography, and cooking - I am always trying new recipes!</p>
                               <p><a href="https://www.linkedin.com/in/jessie-wang-5b82b980/">LinkedIn</a></p>
