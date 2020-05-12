@@ -143,13 +143,22 @@ dashboardPage(skin='black',
                          <br></br> 
                        ')),
           tabItem(tabName = 'summaries',
-                  selectizeInput(inputId ="neighborhood",
+                  fluidRow(
+                  column(6,
+                  selectizeInput(inputId ="neighborhood1",
                                  label = "Neighborhood",
                                  choices = unique (airbnb$neighbourhood)),
                   plotOutput("summaryplot1"),
                   plotOutput("summaryplot2"),
-                  plotOutput("summaryplot3")
-                  ),
+                  plotOutput("summaryplot3")),
+                  column(6,
+                  selectizeInput(inputId ="neighborhood2",
+                                  label = "Neighborhood",
+                                  choices = unique (airbnb$neighbourhood)),
+                  plotOutput("summaryplot4"),
+                  plotOutput("summaryplot5"),
+                  plotOutput("summaryplot6")                  
+                  ))),
             #DATA TAB
           tabItem(tabName='data',
                   HTML('
@@ -173,8 +182,7 @@ dashboardPage(skin='black',
                               Upon graduation, I started my career as an Actuary in the healthcare industry, where I had the opportunity 
                               to work on various projects utilizing healthcare data. 
                               </p>
-                              <p>I became interested in data science as there are many ways to use data creatively as a form 
-                              storytelling. Aside from data science,
+                              <p>I became interested in data science as there are many ways to use data creatively as a form of                               storytelling. Aside from data science,
                               my interests include traveling, photography, and cooking - I am always trying new recipes!</p>
                               <p><a href="https://www.linkedin.com/in/jessie-wang-5b82b980/">LinkedIn</a></p>
                               <p><a href="https://github.com/jessiewangxin/">Github</a></p>
